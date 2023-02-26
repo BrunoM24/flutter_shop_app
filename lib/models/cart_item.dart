@@ -10,4 +10,9 @@ class CartItem {
     required this.product,
     required this.quantity,
   });
+
+  @override
+  String toString() {
+    return 'CartItem{id: $id, product: $product, quantity: $quantity}';
+  }
 }

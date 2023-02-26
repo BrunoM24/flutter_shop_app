@@ -24,6 +24,22 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
       appBar: AppBar(
         title: const Text('MyShop'),
         actions: [
+          PopupMenuButton(
+            onSelected: (FilterOptions value) => setState(
+              () => _filterFavorites = value == FilterOptions.favorites,
+            ),
+            icon: const Icon(Icons.filter_list_alt),
+            itemBuilder: (context) => [
+              const PopupMenuItem(
+                value: FilterOptions.favorites,
+                child: Text('Favorites'),
+              ),
+              const PopupMenuItem(
+                value: FilterOptions.all,
+                child: Text('All'),
+              ),
+            ],
+          ),
           Consumer<Cart>(
             builder: (context, cart, child) => IconButton(
               onPressed: () => Navigator.push(
@@ -38,22 +54,6 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
               ),
             ),
             child: const Icon(Icons.shopping_cart),
-          ),
-          PopupMenuButton(
-            onSelected: (FilterOptions value) => setState(
-              () => _filterFavorites = value == FilterOptions.favorites,
-            ),
-            icon: const Icon(Icons.more_vert),
-            itemBuilder: (context) => [
-              const PopupMenuItem(
-                value: FilterOptions.favorites,
-                child: Text('Favorites'),
-              ),
-              const PopupMenuItem(
-                value: FilterOptions.all,
-                child: Text('All'),
-              ),
-            ],
           ),
         ],
       ),

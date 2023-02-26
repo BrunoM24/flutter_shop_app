@@ -11,6 +11,38 @@ class CartItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
+      confirmDismiss: (direction) {
+        return showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Remove Item?'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, true),
+                child: const Text('Yes'),
+              ),
+              MaterialButton(
+                color: Theme.of(context).primaryColor,
+                onPressed: () => Navigator.pop(context, false),
+                child: const Text(
+                  'NO',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+      background: Container(
+        color: Colors.red,
+        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+        padding: const EdgeInsets.only(right: 20),
+        alignment: AlignmentDirectional.centerEnd,
+        child: const Icon(
+          Icons.delete,
+          color: Colors.white,
+        ),
+      ),
       direction: DismissDirection.endToStart,
       onDismissed: (direction) => Provider.of<Cart>(context, listen: false)
           .removeItem(cartItem.product.id),

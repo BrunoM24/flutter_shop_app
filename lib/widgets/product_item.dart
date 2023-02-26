@@ -23,13 +23,26 @@ class ProductItem extends StatelessWidget {
               product.isFavorite ? Icons.favorite : Icons.favorite_border,
             ),
           ),
-          trailing: IconButton(
-            onPressed: () => cart.addItem(product),
-            icon: const Icon(Icons.shopping_cart_outlined),
-          ),
           title: Text(
             product.title,
             textAlign: TextAlign.center,
+          ),
+          trailing: IconButton(
+            onPressed: () {
+              cart.addItem(product);
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: const Text('Added item to cart!'),
+                  duration: const Duration(seconds: 2),
+                  action: SnackBarAction(
+                    label: 'Undo',
+                    onPressed: () => cart.removeSingleItem(product.id),
+                  ),
+                ),
+              );
+            },
+            icon: const Icon(Icons.shopping_cart_outlined),
           ),
         ),
         child: GestureDetector(
