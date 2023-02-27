@@ -45,7 +45,7 @@ class Products with ChangeNotifier {
   }
 
   void addProduct(Product product) {
-    _products.add(product);
+    _products.add(product.copyWith(id: DateTime.now().toString()));
     notifyListeners();
   }
 }

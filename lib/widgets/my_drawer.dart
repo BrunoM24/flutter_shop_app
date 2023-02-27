@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/screens/orders_screen.dart';
 import 'package:shop_app/screens/products_overview.dart';
+import 'package:shop_app/screens/user_products_screen.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class MyDrawer extends StatelessWidget {
             automaticallyImplyLeading: false,
           ),
           ListTile(
-            leading: const Icon(Icons.shop),
+            leading: const Icon(Icons.storefront),
             title: const Text('Shop'),
             onTap: () => Navigator.push(
               context,
@@ -25,12 +26,22 @@ class MyDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: const Icon(Icons.payment),
+            leading: const Icon(Icons.receipt_long_outlined),
             title: const Text('Orders'),
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => const OrdersScreen(),
+              ),
+            ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.sell_outlined),
+            title: const Text('My Products'),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const UserProductsScreen(),
               ),
             ),
           ),
