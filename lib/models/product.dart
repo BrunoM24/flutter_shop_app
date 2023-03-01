@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 class Product with ChangeNotifier {
   final String id;
@@ -20,6 +23,25 @@ class Product with ChangeNotifier {
   void toggleFavorite() {
     isFavorite = !isFavorite;
     notifyListeners();
+
+    final url = Uri.https(
+      'flutter-shop-app-780d7-default-rtdb.europe-west1.firebasedatabase.app',
+      'products/$id.json',
+    );
+
+    patch(
+      url,
+      body: jsonEncode(
+        {
+          'isFavorite': isFavorite,
+        },
+      ),
+    ).then((value) {
+      if (value.statusCode >= 400) {
+        isFavorite = !isFavorite;
+        notifyListeners();
+      }
+    });
   }
 
   Product copyWith({

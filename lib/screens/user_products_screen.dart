@@ -29,16 +29,20 @@ class UserProductsScreen extends StatelessWidget {
         ],
       ),
       drawer: const MyDrawer(),
-      body: ListView.builder(
-        itemCount: products.length,
-        itemBuilder: (context, index) => Column(
-          children: [
-            UserProductItem(products[index]),
-            const Divider(
-              indent: 12,
-              endIndent: 12,
-            ),
-          ],
+      body: RefreshIndicator(
+        onRefresh: () =>
+            Provider.of<Products>(context, listen: false).getProducts(),
+        child: ListView.builder(
+          itemCount: products.length,
+          itemBuilder: (context, index) => Column(
+            children: [
+              UserProductItem(products[index]),
+              const Divider(
+                indent: 12,
+                endIndent: 12,
+              ),
+            ],
+          ),
         ),
       ),
     );

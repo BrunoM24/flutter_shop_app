@@ -19,6 +19,12 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   bool _filterFavorites = false;
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    Provider.of<Products>(context, listen: false).getProducts();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
