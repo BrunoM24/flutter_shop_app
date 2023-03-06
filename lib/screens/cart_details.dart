@@ -49,28 +49,64 @@ class CartDetailsScreen extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12),
-            child: MaterialButton(
-              minWidth: 240,
-              height: 48,
-              color: Theme.of(context).primaryColor,
-              onPressed: () {
-                Provider.of<Orders>(context, listen: false)
-                    .addOrder(cart.items.values.toList(), cart.totalAmount);
-
-                cart.clearCart();
-              },
-              child: const Text(
-                'ORDER NOW',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
+            child: OrderButton(cart: cart),
           ),
         ],
       ),
+    );
+  }
+}
+
+class OrderButton extends StatefulWidget {
+  const OrderButton({
+    super.key,
+    required this.cart,
+  });
+
+  final Cart cart;
+
+  @override
+  State<OrderButton> createState() => _OrderButtonState();
+}
+
+class _OrderButtonState extends State<OrderButton> {
+  var _isLoading = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialButton(
+      minWidth: 240,
+      height: 48,
+      color: Theme.of(context).primaryColor,
+      disabledColor: Colors.grey,
+      onPressed: widget.cart.itemCount < 1 || _isLoading
+          ? null
+          : () async {
+              setState(() {
+                _isLoading = true;
+              });
+
+              await Provider.of<Orders>(context, listen: false).addOrder(
+                widget.cart.items.values.toList(),
+                widget.cart.totalAmount,
+              );
+
+              setState(() {
+                _isLoading = false;
+              });
+
+              widget.cart.clearCart();
+            },
+      child: _isLoading
+          ? const CircularProgressIndicator()
+          : const Text(
+              'ORDER NOW',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
     );
   }
 }

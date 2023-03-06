@@ -61,9 +61,6 @@ class Products with ChangeNotifier {
       ),
     );
 
-    print(response.statusCode);
-    print(response.body);
-
     _products.add(product.copyWith(id: jsonDecode(response.body)['name']));
 
     notifyListeners();
