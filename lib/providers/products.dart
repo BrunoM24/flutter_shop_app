@@ -7,6 +7,8 @@ import 'package:shop_app/models/product.dart';
 class Products with ChangeNotifier {
   List<Product> _products = [];
 
+  late final String authToken;
+
   List<Product> get products {
     return [..._products];
   }
@@ -19,6 +21,9 @@ class Products with ChangeNotifier {
     final url = Uri.https(
       'flutter-shop-app-780d7-default-rtdb.europe-west1.firebasedatabase.app',
       'products.json',
+      {
+        'auth': authToken,
+      },
     );
 
     final List<Product> tmpList = [];
